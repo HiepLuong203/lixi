@@ -1,0 +1,129 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at center, #8a1c22 0%, #5d1014 100%);
+  color: #fff;
+  padding: var(--spacing-lg);
+  overflow: hidden;
+  position: relative;
+
+  /* Decorative elements */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.1'%3E%3Cpath d='M1 1h2v2H1V1zm4 0h2v2H5V1zm4 0h2v2H9V1zm4 0h2v2h-2V1zm4 0h2v2h-2V1zm-4 4h2v2h-2V5zm-4 0h2v2H9V5zm-4 0h2v2H5V5zM1 5h2v2H1V5z'/%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+}
+
+.header {
+  text-align: center;
+  z-index: 10;
+  
+  h2 {
+    color: var(--color-secondary);
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-xs);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  p {
+    color: #ffd700;
+    opacity: 0.8;
+  }
+}
+
+.gameArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.luckyBag {
+  width: 200px;
+  height: 240px;
+  position: relative;
+  cursor: pointer;
+}
+
+.bagBody {
+  width: 100%;
+  height: 80%;
+  background: linear-gradient(135deg, #FFD700, #FDB931);
+  border-radius: 40% 40% 50% 50%;
+  position: absolute;
+  bottom: 0;
+  box-shadow: 
+    inset -10px -10px 20px rgba(0,0,0,0.2),
+    0 10px 20px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #B8860B;
+
+  &::after {
+    content: ''; /* Texture */
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    border: 2px dashed #B8860B;
+    border-radius: 40% 40% 50% 50%;
+    opacity: 0.5;
+  }
+}
+
+.bagLabel {
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  color: #8B4513;
+  z-index: 2;
+  font-weight: bold;
+}
+
+.bagTie {
+  width: 60%;
+  height: 40px;
+  background-color: #D62839;
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  border-radius: 10px;
+  z-index: 3;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+
+  /* Knot */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background-color: #D62839;
+    border-radius: 50%;
+    border: 4px solid #FFD700;
+  }
+}
+
+.instruction {
+  margin-top: var(--spacing-xl);
+  font-size: 1.2rem;
+  color: var(--color-secondary);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}

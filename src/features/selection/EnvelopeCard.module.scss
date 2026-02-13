@@ -1,0 +1,103 @@
+.card {
+  width: 220px;
+  height: 340px; /* Golden ratio-ish */
+  background-color: var(--color-primary);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 16px;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  flex-shrink: 0; /* Important for carousel */
+
+  &.selected {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    transform: scale(1.02);
+  }
+}
+
+.topFlap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-color: #D62839;
+  border-radius: 0 0 50% 50%;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+  &::after {
+    content: '福'; /* Fu - Luck/Blessing */
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #8B4513;
+    background: radial-gradient(circle, #FFD700, #FDB931);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: 2px solid #FFF;
+    font-family: serif;
+    font-weight: bold;
+  }
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+}
+
+.message {
+  font-family: var(--font-heading);
+  color: var(--color-secondary);
+  font-size: 1.8rem;
+  margin-top: 80px;
+  line-height: 1.4;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Variations */
+.traditional {
+  background: var(--color-primary);
+  /* Add subtle texture */
+  background-image: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.1) 0%, transparent 60%);
+}
+
+.modern {
+  background: linear-gradient(135deg, #E63946 0%, #C1121F 100%);
+  .topFlap {
+    background-color: #A4161A;
+  }
+}
+
+.funny {
+  background-color: var(--color-accent); /* Orange */
+  .topFlap {
+    background-color: #F48C06;
+  }
+  .message {
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0; /* Neutral background for desktop */
+  background-image: radial-gradient(circle at center, #ffffff 0%, #f0f0f0 100%); /* Subtle gradient */
+}
+
+.mobileView {
+  width: 100%;
+  max-width: 480px; /* Typical mobile width */
+  min-height: 100vh;
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 480px) {
+    max-width: 100%;
+    box-shadow: none;
+  }
+}

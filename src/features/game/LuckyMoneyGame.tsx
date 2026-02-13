@@ -18,13 +18,13 @@ export const LuckyMoneyGame: React.FC<LuckyMoneyGameProps> = ({ onFinish }) => {
 
   // Generate 9 envelopes with correct image paths
   const envelopes = [
-    { id: 1, image: '/anhtet1.png' },
-    { id: 2, image: '/anhtet2.jpg' },
-    { id: 3, image: '/anhtet3.jpg' },
-    { id: 4, image: '/anhtet4.jpg' },
-    { id: 5, image: '/anhtet5.jpg' },
-    { id: 6, image: '/anhtet6.jpg' },
-    { id: 7, image: '/anhtet7.jpg' },
+    { id: 1, image: '/anhtet1.jpeg' },
+    { id: 2, image: '/anhtet2.jpeg' },
+    { id: 3, image: '/anhtet3.jpeg' },
+    { id: 4, image: '/anhtet4.jpeg' },
+    { id: 5, image: '/anhtet5.jpeg' },
+    { id: 6, image: '/anhtet6.jpeg' },
+    { id: 7, image: '/anhtet7.jpeg' },
     { id: 8, image: '/anhtet8.png' },
     { id: 9, image: '/anhtet9.png' },
   ];

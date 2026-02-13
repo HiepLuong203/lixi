@@ -5,7 +5,7 @@ import { Fireworks } from '@/components/ui/Fireworks';
 import { motion } from 'framer-motion';
 
 // Mock amounts for demo
-const AMOUNTS = [10000, 20000, 50000, 100000, 200000, 500000];
+
 
 interface LuckyMoneyGameProps {
   onFinish: () => void;
@@ -16,14 +16,22 @@ export const LuckyMoneyGame: React.FC<LuckyMoneyGameProps> = ({ onFinish }) => {
   const [resultAmount, setResultAmount] = useState(0);
   const [showResultModal, setShowResultModal] = useState(false);
 
-  // Generate 12 envelopes
-  const envelopes = Array.from({ length: 12 }, (_, i) => i + 1);
+  // Generate 9 envelopes
+  const envelopes = Array.from({ length: 9 }, (_, i) => i + 1);
+
+  const getWeightedRandomAmount = () => {
+    const rand = Math.random() * 100; // 0 to 100
+    if (rand < 1) return 100000;  // 1%
+    if (rand < 6) return 50000;   // 5% (1 + 5)
+    if (rand < 40) return 20000;  // 34% (6 + 34)
+    return 10000;                 // 60% (remaining)
+  };
 
   const handleOpenEnvelope = (id: number) => {
     if (openedEnvelopeId !== null) return; // Already opened one
 
     setOpenedEnvelopeId(id);
-    const randomAmount = AMOUNTS[Math.floor(Math.random() * AMOUNTS.length)];
+    const randomAmount = getWeightedRandomAmount();
     setResultAmount(randomAmount);
 
     setShowResultModal(true);

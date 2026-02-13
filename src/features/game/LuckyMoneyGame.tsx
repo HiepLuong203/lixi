@@ -16,8 +16,18 @@ export const LuckyMoneyGame: React.FC<LuckyMoneyGameProps> = ({ onFinish }) => {
   const [resultAmount, setResultAmount] = useState(0);
   const [showResultModal, setShowResultModal] = useState(false);
 
-  // Generate 9 envelopes
-  const envelopes = Array.from({ length: 9 }, (_, i) => i + 1);
+  // Generate 9 envelopes with correct image paths
+  const envelopes = [
+    { id: 1, image: '/anhtet1.png' },
+    { id: 2, image: '/anhtet2.jpg' },
+    { id: 3, image: '/anhtet3.jpg' },
+    { id: 4, image: '/anhtet4.jpg' },
+    { id: 5, image: '/anhtet5.jpg' },
+    { id: 6, image: '/anhtet6.jpg' },
+    { id: 7, image: '/anhtet7.jpg' },
+    { id: 8, image: '/anhtet8.png' },
+    { id: 9, image: '/anhtet9.png' },
+  ];
 
   const getWeightedRandomAmount = () => {
     const rand = Math.random() * 100; // 0 to 100
@@ -55,20 +65,20 @@ export const LuckyMoneyGame: React.FC<LuckyMoneyGameProps> = ({ onFinish }) => {
 
       <div className={styles.gameArea}>
         <div className={styles.envelopeGrid}>
-          {envelopes.map((id) => (
+          {envelopes.map((env) => (
             <motion.div
-              key={id}
-              className={`${styles.envelopeItem} ${openedEnvelopeId === id ? styles.opened : ''} ${openedEnvelopeId !== null && openedEnvelopeId !== id ? styles.dimmed : ''}`}
-              onClick={() => handleOpenEnvelope(id)}
+              key={env.id}
+              className={`${styles.envelopeItem} ${openedEnvelopeId === env.id ? styles.opened : ''} ${openedEnvelopeId !== null && openedEnvelopeId !== env.id ? styles.dimmed : ''}`}
+              onClick={() => handleOpenEnvelope(env.id)}
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: id * 0.05, type: 'spring' }}
+              transition={{ delay: env.id * 0.05, type: 'spring' }}
               whileHover={openedEnvelopeId === null ? { scale: 1.05 } : {}}
               whileTap={openedEnvelopeId === null ? { scale: 0.95 } : {}}
             >
               <div className={styles.envelopeImage}>
-                <img src="/envelope-horse-2026.png" alt={`Lì xì ${id}`} />
-                <span className={styles.envelopeNumber}>{id}</span>
+                <img src={env.image} alt={`Lì xì ${env.id}`} />
+                <span className={styles.envelopeNumber}>{env.id}</span>
               </div>
             </motion.div>
           ))}

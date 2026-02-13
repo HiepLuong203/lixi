@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './LuckyMoneyGame.module.scss';
-import { Button } from '@/components/ui/Button';
 import { ResultModal } from './ResultModal';
 import { Fireworks } from '@/components/ui/Fireworks';
 import { motion } from 'framer-motion';
@@ -9,30 +8,30 @@ import { motion } from 'framer-motion';
 const AMOUNTS = [10000, 20000, 50000, 100000, 200000, 500000];
 
 interface LuckyMoneyGameProps {
-  onBack: () => void;
   onFinish: () => void;
 }
 
-export const LuckyMoneyGame: React.FC<LuckyMoneyGameProps> = ({ onBack, onFinish }) => {
-  const [gameState, setGameState] = useState<'ready' | 'shaking' | 'opened'>('ready');
+export const LuckyMoneyGame: React.FC<LuckyMoneyGameProps> = ({ onFinish }) => {
+  const [openedEnvelopeId, setOpenedEnvelopeId] = useState<number | null>(null);
   const [resultAmount, setResultAmount] = useState(0);
+  const [showResultModal, setShowResultModal] = useState(false);
 
-  const handleOpenBag = () => {
-    if (gameState !== 'ready') return;
+  // Generate 12 envelopes
+  const envelopes = Array.from({ length: 12 }, (_, i) => i + 1);
 
-    setGameState('shaking');
-    
-    // Simulate network/logic delay with shaking animation
-    setTimeout(() => {
-      const randomAmount = AMOUNTS[Math.floor(Math.random() * AMOUNTS.length)];
-      setResultAmount(randomAmount);
-      setGameState('opened');
-    }, 1500);
+  const handleOpenEnvelope = (id: number) => {
+    if (openedEnvelopeId !== null) return; // Already opened one
+
+    setOpenedEnvelopeId(id);
+    const randomAmount = AMOUNTS[Math.floor(Math.random() * AMOUNTS.length)];
+    setResultAmount(randomAmount);
+
+    setShowResultModal(true);
   };
 
   const handleCloseDetail = () => {
-    setGameState('ready');
-    onFinish(); // Or reset to play again depending on requirements
+    setShowResultModal(false);
+    onFinish(); 
   };
 
   return (
@@ -42,53 +41,44 @@ export const LuckyMoneyGame: React.FC<LuckyMoneyGameProps> = ({ onBack, onFinish
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >
-        <h2>Lộc Đầu Năm</h2>
-        <p>Chạm vào túi để nhận lì xì</p>
+        <h2>MỪNG TẾT BÍNH NGỌ 2026</h2>
+        <p className={styles.subHeader}>LÌ XÌ ĐỎ THẮM - LỘC TƯƠI ĐẦY NHÀ</p>
       </motion.div>
 
       <div className={styles.gameArea}>
-        <motion.div 
-          className={styles.luckyBag}
-          animate={gameState === 'shaking' ? { 
-            rotate: [0, -10, 10, -10, 10, 0],
-            scale: [1, 1.1, 1]
-          } : {
-            y: [0, -10, 0] // Floating effect when ready
-          }}
-          transition={gameState === 'shaking' ? { duration: 0.5, repeat: 2 } : { duration: 2, repeat: Infinity }}
-          onClick={handleOpenBag}
-        >
-          <div className={styles.bagBody}>
-            <span className={styles.bagLabel}>Lộc</span>
-          </div>
-          <div className={styles.bagTie}></div>
-        </motion.div>
-
-        {gameState === 'ready' && (
-          <motion.p 
-            className={styles.instruction}
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            Chạm để mở!
-          </motion.p>
-        )}
+        <div className={styles.envelopeGrid}>
+          {envelopes.map((id) => (
+            <motion.div
+              key={id}
+              className={`${styles.envelopeItem} ${openedEnvelopeId === id ? styles.opened : ''} ${openedEnvelopeId !== null && openedEnvelopeId !== id ? styles.dimmed : ''}`}
+              onClick={() => handleOpenEnvelope(id)}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: id * 0.05, type: 'spring' }}
+              whileHover={openedEnvelopeId === null ? { scale: 1.05 } : {}}
+              whileTap={openedEnvelopeId === null ? { scale: 0.95 } : {}}
+            >
+              <div className={styles.envelopeImage}>
+                <img src="/envelope-horse-2026.png" alt={`Lì xì ${id}`} />
+                <span className={styles.envelopeNumber}>{id}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       <div className={styles.footer}>
-        <Button variant="red" onClick={onBack} disabled={gameState === 'shaking'}>
-          Quay Lại
-        </Button>
+        {/* Back button removed as per simplified flow */}
       </div>
 
       <ResultModal 
-        isOpen={gameState === 'opened'} 
+        isOpen={showResultModal} 
         amount={resultAmount} 
         onClose={handleCloseDetail} 
         onShare={() => alert('Chức năng chia sẻ đang phát triển!')}
       />
       
-      {gameState === 'opened' && <Fireworks />}
+      {showResultModal && <Fireworks />}
     </div>
   );
 };
